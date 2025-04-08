@@ -9,6 +9,8 @@ class Generator extends Model
 {
     /** @use HasFactory<\Database\Factories\GeneratorFactory> */
     use HasFactory;
+    
+    protected $fillable = ['name'];
 
     public function galleries()
     {
