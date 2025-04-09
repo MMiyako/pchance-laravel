@@ -3,6 +3,13 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
+use App\Http\Controllers\GalleryController;
+use App\Http\Controllers\ImageController;
+ 
+Route::resource('galleries', GalleryController::class);
+
+Route::post('/images/{id}/favourite', [ImageController::class, 'toggleFavourite'])->name('images.favourite');
+
 Route::get('/', function () {
     return view('welcome');
 });

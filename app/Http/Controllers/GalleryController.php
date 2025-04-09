@@ -13,7 +13,9 @@ class GalleryController extends Controller
      */
     public function index()
     {
-        //
+        $galleries = Gallery::all();
+
+        return view('galleries.index', compact('galleries'));
     }
 
     /**
@@ -37,7 +39,7 @@ class GalleryController extends Controller
      */
     public function show(Gallery $gallery)
     {
-        //
+        return view('galleries.show', compact('gallery'));
     }
 
     /**

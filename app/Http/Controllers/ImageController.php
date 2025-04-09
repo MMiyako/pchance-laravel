@@ -63,4 +63,13 @@ class ImageController extends Controller
     {
         //
     }
+
+    public function toggleFavourite($id)
+    {
+        $image = Image::findOrFail($id);
+        $image->is_favourite = !$image->is_favourite;
+        $image->save();
+
+        return response()->json(['is_favourite' => $image->is_favourite]);
+    }
 }

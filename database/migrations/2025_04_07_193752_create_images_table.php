@@ -17,6 +17,7 @@ return new class extends Migration
             $table->integer("index");
             $table->string("name");
             $table->string("type");
+            $table->boolean('is_favourite')->default(false);
             $table->timestamps();
         });
     }
