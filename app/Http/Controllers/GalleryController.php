@@ -65,4 +65,10 @@ class GalleryController extends Controller
     {
         //
     }
+
+    public function gallery()
+    {
+        $gallery = Gallery::findOrFail(1);
+        return view('galleries.gallery', compact('gallery'));
+    }
 }

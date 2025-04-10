@@ -7,6 +7,7 @@ use App\Http\Controllers\GalleryController;
 use App\Http\Controllers\ImageController;
  
 Route::resource('galleries', GalleryController::class);
+Route::get('gallery', [GalleryController::class, 'gallery'])->name('galleries.gallery');
 
 Route::post('/images/{id}/favourite', [ImageController::class, 'toggleFavourite'])->name('images.favourite');
 
