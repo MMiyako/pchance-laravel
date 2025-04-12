@@ -5,11 +5,16 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\GalleryController;
 use App\Http\Controllers\ImageController;
+use App\Http\Controllers\SlideshowController;
  
 Route::resource('galleries', GalleryController::class);
 Route::get('gallery', [GalleryController::class, 'gallery'])->name('galleries.gallery');
 
 Route::post('/images/{id}/favourite', [ImageController::class, 'toggleFavourite'])->name('images.favourite');
+
+Route::get('/slideshow', [SlideshowController::class, 'index']);
+Route::get('/slideshow/generators/{generator}/galleries', [SlideshowController::class, 'getGalleries']);
+Route::get('/slideshow/galleries/{gallery}/images', [SlideshowController::class, 'getImages']);
 
 Route::get('/', function () {
     return view('welcome');

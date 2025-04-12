@@ -14,4 +14,13 @@ class Image extends Model
     {
         return $this->belongsTo(Gallery::class);
     }
+
+    public function getUrlAttribute()
+    {
+
+        $galleryName = $this->gallery->name;
+        $generatorName = $this->gallery->generator->name;
+
+        return asset('storage/' . $generatorName . '_' . $galleryName . '/' . $this->name . "." . $this->type);
+    }
 }

@@ -1,0 +1,47 @@
+html {
+    overflow-y: scroll;
+    scrollbar-width: none;
+    /* Firefox */
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: #f3efe7;
+    margin: 0;
+    padding: 0;
+}
+
+#wrapper {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+}
+
+.card {
+    position: relative;
+    overflow: hidden;
+    height: 768px;
+    width: 512px;
+}
+
+.settings {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: 100%;
+}
+
+input, select {
+    -webkit-box-sizing: border-box;
+       -moz-box-sizing: border-box;
+            box-sizing: border-box;
+}
+
+.settings select,
+.settings input,
+.settings button {
+    width: 150px;
+    margin: 5px;
+    padding: 5px;
+}
