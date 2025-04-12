@@ -7,6 +7,7 @@ class ImageGallery {
         this.gallerySelect = this.card.querySelector(".select-gallery");
         this.fromInput = this.card.querySelector(".input-from");
         this.toInput = this.card.querySelector(".input-to");
+        this.timerInput = this.card.querySelector(".input-timer");
         this.submitButton = this.card.querySelector(".button-submit");
         this.slider = this.card.querySelector(".slider");
 
@@ -50,7 +51,10 @@ class ImageGallery {
         let gallery = this.gallerySelect.value;
         let from = +this.fromInput.value;
         let to = +this.toInput.value;
-        let count = +this.gallerySelect.options[this.gallerySelect.selectedIndex].getAttribute("data-count");
+        let count =
+            +this.gallerySelect.options[
+                this.gallerySelect.selectedIndex
+            ].getAttribute("data-count");
 
         if (!gallery || !from || !to) {
             alert("Please fill all fields before submitting.");
@@ -96,7 +100,14 @@ class ImageGallery {
     displaySlider() {
         let settings = this.card.querySelector(".settings");
         settings.style.display = "none";
-        new ImageSlider(this.slider);
+
+        let timer = +this.timerInput.value;
+
+        if (timer) {
+            new ImageSlider(this.slider, +this.timerInput.value * 1000);
+        } else {
+            new ImageSlider(this.slider);
+        }
     }
 }
 

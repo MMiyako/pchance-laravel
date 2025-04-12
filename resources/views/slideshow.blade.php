@@ -28,6 +28,8 @@
                     <input type="number" class="input-from" placeholder="From">
                     <input type="number" class="input-to" placeholder="To">
 
+                    <input type="number" class="input-timer" placeholder="Seconds (Default: 7)">
+
                     <button class="button-submit">Go</button>
                 </div>
                 <div class="slider"></div>

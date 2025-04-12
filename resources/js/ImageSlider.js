@@ -1,10 +1,11 @@
 class ImageSlider {
-    constructor(sliderElement, timer = 3000) {
+    constructor(sliderElement, timer = 7000) {
         this.sliderElement = sliderElement;
         this.images = this.sliderElement.querySelectorAll("img");
         this.currentIndex = 0;
         this.timer = timer;
         this.intervalId = null;
+        this.isPaused = false;
 
         // Show the first image
         this.images[this.currentIndex].style.display = "block";
@@ -16,9 +17,11 @@ class ImageSlider {
         this.sliderElement.addEventListener("mouseover", () =>
             this.stopSlider()
         );
-        this.sliderElement.addEventListener("mouseout", () =>
-            this.startSlider()
-        );
+        this.sliderElement.addEventListener("mouseout", () => {
+            if (!this.isPaused) {
+                this.startSlider();
+            }
+        });
 
         // Add keyboard navigation
         document.addEventListener("keydown", (event) =>
@@ -43,11 +46,20 @@ class ImageSlider {
     }
 
     startSlider() {
-        this.intervalId = setInterval(() => this.changeImage(), this.timer);
+        if (!this.isPaused) {
+            // Only start a new interval if one is not already running
+            if (!this.intervalId) {
+                this.intervalId = setInterval(
+                    () => this.changeImage(),
+                    this.timer
+                );
+            }
+        }
     }
 
     stopSlider() {
         clearInterval(this.intervalId);
+        this.intervalId = null; // Reset intervalId to allow restarting later
     }
 
     nextImage() {
@@ -63,12 +75,29 @@ class ImageSlider {
         this.images[this.currentIndex].style.display = "block";
     }
 
+    togglePause() {
+        this.isPaused = !this.isPaused;
+        if (this.isPaused) {
+            this.stopSlider();
+        } else {
+            this.startSlider();
+        }
+    }
+
     handleKeydown(event) {
         if (this.sliderElement.matches(":hover")) {
             if (event.key === "ArrowRight") {
                 this.nextImage();
             } else if (event.key === "ArrowLeft") {
                 this.previousImage();
+            } else if (event.key === "ArrowUp") {
+                event.preventDefault();
+                this.timer = this.timer + 1000;
+            } else if (event.key === "ArrowDown") {
+                event.preventDefault();
+                this.timer = this.timer - 1000;
+            } else if (event.key === "p") {
+                this.togglePause();
             } else if (event.key === "s") {
                 let settings =
                     this.sliderElement.parentElement.querySelector(".settings");
