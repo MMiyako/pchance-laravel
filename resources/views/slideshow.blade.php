@@ -36,6 +36,18 @@
 
     </div>
 
+    <div class="helper">
+        <ul>
+            <li><span>🡐</span>Previous</li>
+            <li><span>🡒</span>Next</li>
+            <li><span>🡑</span>Faster</li>
+            <li><span>🡓</span>Slower</li>
+            <li><span>H</span>Overlay</li>
+            <li><span>P</span>Pause</li>
+            <li><span>S</span>Settings</li>
+        </ul>
+    </div>
+
 </body>
 
 </html>
