@@ -33,6 +33,12 @@
                     <button class="button-submit">Go</button>
                 </div>
                 <div class="slider"></div>
+                <div class="flash-overlay">▶</div>
+                <div class="status-overlay">
+                    <div class="pause-status"></div>
+                    <div class="countdown-timer"></div>
+                    <div class="image-status"></div>
+                </div>
             </div>
         @endfor
 

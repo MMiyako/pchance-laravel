@@ -75,3 +75,38 @@ input, select {
     align-items: center;
     margin-right: 10px;
 }
+
+.flash-overlay {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 16px;
+    background-color: rgba(0, 0, 0, 0.6);
+    color: #FFF;
+    padding: 6px 15px;
+    display: none;
+    z-index: 100
+}
+
+.status-overlay {
+    position: absolute;
+    bottom: 5px;
+    left: 5px;
+    font-size: 10px;
+    background-color: rgba(255, 255, 255, 0.7);
+    color: #000;
+    padding: 2px 6px;
+    display: none;
+    z-index: 100;
+}
+
+.status-overlay div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.pause-manual {
+    color: #ff2929;
+}
