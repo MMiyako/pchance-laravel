@@ -16,11 +16,20 @@ class SlideshowController extends Controller
         return view('slideshow', compact('generators'));
     }
 
-    public function getGalleries($generatorId)
+    public function getGalleries($generatorId, Request $request)
     {
-        $galleries = Gallery::withCount('images')
+
+        if ($request->is_favourite) {
+            $galleries = Gallery::withCount(['images' => function($query) {
+                $query->where('is_favourite', 1);
+            }])
             ->where('generator_id', $generatorId)
             ->get();
+        } else {
+            $galleries = Gallery::withCount('images')
+            ->where('generator_id', $generatorId)
+            ->get();
+        }
 
         return response()->json($galleries);
     }
@@ -30,6 +39,19 @@ class SlideshowController extends Controller
         $images = Image::with('gallery.generator')
             ->where('gallery_id', $galleryId)
             ->whereBetween('index', [$request->from, $request->to])
+            ->get()
+            ->append('url');
+
+        return response()->json($images);
+    }
+
+    public function getImagesFavourite($galleryId, Request $request)
+    {
+        $images = Image::with('gallery.generator')
+            ->where('gallery_id', $galleryId)
+            ->where('is_favourite', 1)
+            ->skip($request->from - 1)
+            ->take($request->to)
             ->get()
             ->append('url');
 

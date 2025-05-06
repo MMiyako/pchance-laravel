@@ -15,6 +15,7 @@ Route::post('/images/{id}/favourite', [ImageController::class, 'toggleFavourite'
 Route::get('/slideshow', [SlideshowController::class, 'index']);
 Route::get('/slideshow/generators/{generator}/galleries', [SlideshowController::class, 'getGalleries']);
 Route::get('/slideshow/galleries/{gallery}/images', [SlideshowController::class, 'getImages']);
+Route::get('/slideshow/galleries/{gallery}/images/favourite', [SlideshowController::class, 'getImagesFavourite']);
 
 Route::get('/', function () {
     return view('welcome');

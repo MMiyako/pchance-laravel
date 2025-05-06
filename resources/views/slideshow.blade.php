@@ -14,6 +14,10 @@
         @for ($i = 1; $i <= 10; $i++)
             <div id="card-{{ $i }}" class="card">
                 <div class="settings">
+                    <select class="select-mode">
+                        <option value="all">All</option>
+                        <option value="favourite">Favourite</option>
+                    </select>
                     <select class="select-generator">
                         <option value="">Generator</option>
                         @foreach ($generators as $generator)

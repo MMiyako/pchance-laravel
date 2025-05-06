@@ -16,6 +16,7 @@ class ImageGallery {
                 PAUSE_STATUS: ".pause-status",
                 COUNTDOWN_TIMER: ".countdown-timer",
                 IMAGE_STATUS: ".image-status",
+                MODE_SELECT: ".select-mode",
             },
             KEYCODES: {
                 S: 83,
@@ -67,6 +68,9 @@ class ImageGallery {
             ),
             imageStatus: this.card.querySelector(
                 this.constants.SELECTORS.IMAGE_STATUS
+            ),
+            modeSelect: this.card.querySelector(
+                this.constants.SELECTORS.MODE_SELECT
             ),
         };
 
@@ -148,8 +152,14 @@ class ImageGallery {
 
     async loadGalleries(generator) {
         try {
+            const params = {};
+            if (this.elements.modeSelect.value === 'favourite') {
+                params.is_favourite = 1;
+            }
+            
             const response = await axios.get(
-                `/slideshow/generators/${generator}/galleries`
+                `/slideshow/generators/${generator}/galleries`,
+                { params }
             );
             this.populateGalleries(response.data);
         } catch (error) {
@@ -207,26 +217,17 @@ class ImageGallery {
             };
         }
 
-        if (to < from) {
-            return {
-                isValid: false,
-                message: "'To' should be greater than 'From'.",
-            };
-        }
-
-        if (from > count || to > count) {
-            return {
-                isValid: false,
-                message: `Should be less or equal to ${count}`,
-            };
-        }
-
         return { isValid: true };
     }
 
     async fetchImages() {
-        const { gallerySelect, fromInput, toInput } = this.elements;
-        return axios.get(`/slideshow/galleries/${gallerySelect.value}/images`, {
+        const { gallerySelect, fromInput, toInput, modeSelect } = this.elements;
+        const baseUrl = `/slideshow/galleries/${gallerySelect.value}/images`;
+        const url = modeSelect.value === 'favourite' 
+            ? `${baseUrl}/favourite` 
+            : baseUrl;
+    
+        return axios.get(url, {
             params: {
                 from: fromInput.value,
                 to: toInput.value,
