@@ -6,7 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Laravel</title>
     <style>
-        
         body {
             background-color: #e3e3e3;
         }
@@ -38,6 +37,34 @@
             cursor: pointer;
         }
 
+        .flash-message {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 15px;
+            border-radius: 5px;
+            color: white;
+            z-index: 1000;
+            animation: slideIn 0.5s forwards;
+        }
+
+        .flash-message.success {
+            background-color: #4CAF50;
+        }
+
+        .flash-message.error {
+            background-color: #f44336;
+        }
+
+        @keyframes slideIn {
+            from {
+                right: -300px;
+            }
+
+            to {
+                right: 20px;
+            }
+        }
     </style>
 </head>
 
@@ -49,12 +76,12 @@
         @foreach ($gallery->images->reverse() as $image)
             <div>
                 <div class="image">
-                    <img src="{{ asset("storage/{$gallery->generator->name}_{$gallery->name}/" . $image->name . '.' . $image->type) }}">
+                    <img
+                        src="{{ asset("storage/{$gallery->generator->name}_{$gallery->name}/" . $image->name . '.' . $image->type) }}">
                 </div>
                 <div class="footer">
                     <p>{{ $image->index }}</p>
-                    <a class="favourite-btn"
-                        data-id="{{ $image->id }}">
+                    <a class="favourite-btn" data-id="{{ $image->id }}">
                         {{ $image->is_favourite ? '❤️' : '🤍' }}
                     </a>
                 </div>
@@ -79,8 +106,10 @@
                     success: function(response) {
                         if (response.is_favourite) {
                             button.text('❤️');
+                            showFlashMessage('Added to favorites! Total favorites: ' + response.favourite_count, 'success');
                         } else {
                             button.text('🤍');
+                            showFlashMessage('Removed from favorites! Total favorites: ' + response.favourite_count, 'success');
                         }
                     },
                     error: function(xhr) {
@@ -89,6 +118,19 @@
                 });
             });
         });
+
+        function showFlashMessage(message, type) {
+            // Create a flash message element (adjust this to match your UI)
+            var flashDiv = $('<div class="flash-message ' + type + '">' + message + '</div>');
+            $('body').append(flashDiv);
+
+            // Auto-hide after 3 seconds
+            setTimeout(function() {
+                flashDiv.fadeOut('slow', function() {
+                    $(this).remove();
+                });
+            }, 3000);
+        }
     </script>
 
 </body>

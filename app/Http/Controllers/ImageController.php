@@ -70,6 +70,10 @@ class ImageController extends Controller
         $image->is_favourite = !$image->is_favourite;
         $image->save();
 
-        return response()->json(['is_favourite' => $image->is_favourite]);
+        $favouriteCount = Image::where('gallery_id', $image->gallery_id)
+            ->where('is_favourite', "1")
+            ->count();
+
+        return response()->json(['is_favourite' => $image->is_favourite, 'favourite_count' => $favouriteCount]);
     }
 }
