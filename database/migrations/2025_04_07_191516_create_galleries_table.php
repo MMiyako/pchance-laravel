@@ -15,6 +15,8 @@ return new class extends Migration
             $table->id();
             $table->foreignId('generator_id')->constrained('generators')->onDelete('cascade');
             $table->string("name");
+            $table->boolean('is_final')->default(false);
+            $table->text('remark')->default('');
             $table->timestamps();
         });
     }
