@@ -76,6 +76,15 @@ input, select {
     margin-right: 10px;
 }
 
+.helper .row2 li {
+    width: 280px;
+}
+
+.helper .row2 li span {
+    width: 120px;
+    background-color: #b5dcfd;
+}
+
 .flash-overlay {
     position: absolute;
     top: 50%;

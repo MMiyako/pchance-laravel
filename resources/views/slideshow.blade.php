@@ -49,7 +49,7 @@
     </div>
 
     <div class="helper">
-        <ul>
+        <ul class="row1">
             <li><span>🡐</span>Previous</li>
             <li><span>🡒</span>Next</li>
             <li><span>🡑</span>Faster</li>
@@ -57,6 +57,11 @@
             <li><span>H</span>Overlay</li>
             <li><span>P</span>Pause</li>
             <li><span>S</span>Settings</li>
+        </ul>
+        <ul class="row2">
+            <li><span>Numpad 8</span>Scroll Up</li>
+            <li><span>Numpad 2</span>Scroll Down</li>
+            <li><span>CTRL + Mouse</span>Drag To Scroll</li>
         </ul>
     </div>
 
