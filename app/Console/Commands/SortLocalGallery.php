@@ -54,6 +54,8 @@ class SortLocalGallery extends Command
         $successImage = 0;
         $failedJson = 0;
         $failedImage = 0;
+        $skippedJson = 0;
+        $skippedImage = 0;
 
         // Prepare target directories
         $jsonTargetDir = '_OUTPUT/jsons/';
@@ -64,6 +66,13 @@ class SortLocalGallery extends Command
         // Process JSON files
         foreach ($jsons as $file) {
             $targetPath = $jsonTargetDir . basename($file);
+
+            // Skip if file already exists in target
+            if (Storage::disk('tmp')->exists($targetPath)) {
+                $skippedJson++;
+                $progress->advance();
+                continue;
+            }
 
             try {
                 Storage::disk('tmp')->move($file, $targetPath);
@@ -80,6 +89,13 @@ class SortLocalGallery extends Command
         // Process image files
         foreach ($images as $file) {
             $targetPath = $imageTargetDir . basename($file);
+
+            // Skip if file already exists in target
+            if (Storage::disk('tmp')->exists($targetPath)) {
+                $skippedImage++;
+                $progress->advance();
+                continue;
+            }
 
             try {
                 Storage::disk('tmp')->move($file, $targetPath);
@@ -104,14 +120,22 @@ class SortLocalGallery extends Command
 
         // Results
         $this->table(
-            ['Metric', 'Count'],
+            ['JSON', 'Count'],
             [
-                ['Total JSONs', $total],
-                ['Moved JSONs', $successJson],
-                ['Failed JSONs', $failedJson],
-                ['Total Images', $total],
-                ['Moved Images', $successImage],
-                ['Failed Images', $failedImage],
+                ['Total', $total],
+                ['Moved', $successJson],
+                ['Skipped', $skippedJson],
+                ['Failed', $failedJson]
+            ]
+        );
+
+        $this->table(
+            ['Image', 'Count'],
+            [
+                ['Total', $total],
+                ['Moved', $successImage],
+                ['Skipped', $skippedImage],
+                ['Failed', $failedImage]
             ]
         );
     }
